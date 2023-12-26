@@ -17,8 +17,9 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: kube-prometheus-stack
   syncPolicy:
-  automated:
-    prune: true
-    selfHeal: true
-  syncOptions:
-    - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
