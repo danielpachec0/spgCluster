@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fluentbit
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: fluentbit
+    repoURL: https://fluent.github.io/helm-charts
+    targetRevision: 0.6.5
+    helm:
+      valuesObject:
+        metrics:
+          enabled: true
+          namespace: fluentbit
+          interval: 30s
+          scrapeTimeout: 10s 
+        dashboards:
+          enabled: true
+      releaseName: fluentbit
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: fluentbit
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
