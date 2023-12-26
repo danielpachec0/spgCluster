@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    chart: fluentbit
+    chart: fluent-bit
     repoURL: https://fluent.github.io/helm-charts
     targetRevision: 0.40.0
     helm:
