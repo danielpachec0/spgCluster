@@ -18,8 +18,6 @@ spec:
           scrapeTimeout: 10s 
         dashboards:
           enabled: true
-        loki:
-          serviceName: loki.default.svc.cluster.local
       releaseName: fluentbit
   destination:
     server: "https://kubernetes.default.svc"
