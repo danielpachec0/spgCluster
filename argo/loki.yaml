@@ -12,7 +12,8 @@ spec:
     helm:
       valuesObject:
         monitoring:
-          selfMonitoring: disabled
+          selfMonitoring:
+            enabled: false
         loki:
           commonConfig:
             replication_factor: 1
