@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     chart: opensearch-operator
-    repoURL: https://opensearch-project.github.io
+    repoURL: https://opster.github.io/opensearch-k8s-operator
     targetRevision: 2.4.0
     helm:
       releaseName: opensearch-operator
