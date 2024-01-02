@@ -7,9 +7,9 @@ spec:
   project: default
   source:
     chart: openseach-operator
-    repoURL: https://helm.opensearch.org
+    repoURL: https://opensearch-project.github.io/opensearch-k8s-operator/
     targetRevision: 2.4.0
-    path: charts/opensearch-operator
+      #path: charts/opensearch-operator
     helm:
       #valuesObject:
       #  metrics:
