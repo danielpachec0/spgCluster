@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    chart: openseach-operator
+    chart: opensearch-operator
     repoURL: https://opensearch-project.github.io/opensearch-k8s-operator/
-    targetRevision: 2.3.2
+    targetRevision: 2.4.0
       #path: charts/opensearch-operator
     helm:
       #valuesObject:
