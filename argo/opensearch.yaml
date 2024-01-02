@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     chart: openseach-operator
-    repoURL: https://github.com/danielpachec0/spgCluster.git
+    repoURL: https://github.com/danielpachec0/spgCluster
     targetRevision: 2.4.0
     path: chart/opensearch-operator-2.4.0.tgz
     helm:
