@@ -11,6 +11,12 @@ spec:
     targetRevision: 55.5.0
     helm:
       valuesObject:
+        prometheus:
+          prometheusSpec:
+            additionalScrapeConfigs:
+              - job_name: 'loki'
+                static_configs:
+                  - targets: ['loki.loki.svc.cluster.local:3100']
         namespaceOverride: kube-prometheus-stack
       releaseName: kube-prometheus-stack
   destination:
