@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: loki
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 5.41.4
+    helm:
+      valuesObject:
+        loki:
+          commonConfig:
+            replication_factor: 1
+          storage:
+            type: 'filesystem'
+        singleBinary:
+          replicas: 1
+        promtail:
+          enabled: true
+          config:
+            positions:
+              filename: /tmp/positions.yaml
+            clients:
+              - url: http://loki:3100/loki/api/v1/push
+                external_labels:
+                  job: varlogs
+                labels:
+                  job: system    
+      releaseName: loki
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: loki
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
