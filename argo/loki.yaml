@@ -29,15 +29,15 @@ spec:
             #    - source_labels: [__meta_kubernetes_pod_namespace]
             #      action: replace
             #      target_label: namespace
-          config:
-            positions:
-              filename: /tmp/positions.yaml
-            clients:
-              - url: http://loki:3100/loki/api/v1/push
-                external_labels:
-                  job: varlogs
-                labels:
-                  job: system    
+            #config:
+            #positions:
+            #  filename: /tmp/positions.yaml
+            #clients:
+            #  - url: http://loki:3100/loki/api/v1/push
+            #    external_labels:
+            #      job: varlogs
+            #    labels:
+            #      job: system    
       releaseName: loki
   destination:
     server: "https://kubernetes.default.svc"
