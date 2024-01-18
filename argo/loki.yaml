@@ -21,6 +21,14 @@ spec:
           replicas: 1
         promtail:
           enabled: true
+          scrapeConfigs:
+            - job_name: kubernetes-pods
+              kubernetes_sd_configs:
+                - role: pod
+              relabel_configs:
+                - source_labels: [__meta_kubernetes_pod_namespace]
+                  action: replace
+                  target_label: namespace
           config:
             positions:
               filename: /tmp/positions.yaml
