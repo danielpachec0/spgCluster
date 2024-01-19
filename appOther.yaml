@@ -8,7 +8,7 @@ spec:
   source: 
     repoURL: https://github.com/danielpachec0/spgCluster
     targetRevision: HEAD
-    path: argo
+    path: argo/otherStack
   destination:
     server: https://kubernetes.default.svc
     namespace: default
