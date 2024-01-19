@@ -1,7 +1,7 @@
 apiVersion: opensearch.opster.io/v1
 kind: OpenSearchCluster
 metadata:
-  name: my-cluster
+  name: opensearch
   namespace: opensearch
 spec:
   general:
