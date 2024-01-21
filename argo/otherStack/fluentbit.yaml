@@ -17,6 +17,11 @@ spec:
             host: opensearch-cluster-master.opensearch.svc.cluster.local
             port: 9200
             index: 'kubernetes_cluster'
+            type: _doc
+            logstash_prefix: kubernetes_cluster
+            logstash_format: true
+            replace_dots: false
+            time_key: '@timestamp'
         metrics:
           enabled: true
           namespace: fluentbit
