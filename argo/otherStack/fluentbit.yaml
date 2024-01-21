@@ -20,8 +20,8 @@ spec:
                Match fluentbit.*
                Host opensearch-cluster-master.opensearch.svc.cluster.local
                Port 9200
-               Logstash_Format On
-               Logstash_Prefix infra
+               #Logstash_Format On
+               #Logstash_Prefix infra
                Retry_Limit False
                HTTP_User admin
                HTTP_Passwd admin
