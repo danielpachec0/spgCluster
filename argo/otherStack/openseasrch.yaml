@@ -55,9 +55,6 @@ spec:
                    ".opendistro-asynchronous-search-response*",
                  ]
     ######## End OpenSearch Security Demo Configuration ########
-        opensearch.yml: |
-          compatibility:
-            override_main_response_version: true
       releaseName: opensearch
   destination:
     server: "https://kubernetes.default.svc"
