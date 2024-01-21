@@ -14,6 +14,9 @@ spec:
         service:
           logLevel: debug
         config:
+          service: |
+           [SERVICE]
+               Parsers_File /opt/bitnami/fluent-bit/conf/parsers.conf
           outputs: |
            [OUTPUT]
                Name opensearch
