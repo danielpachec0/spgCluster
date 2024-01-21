@@ -11,6 +11,8 @@ spec:
     targetRevision: 0.40.0
     helm:
       valuesObject:
+        service:
+          logLevel: debug
         backend:
           type: es
           es:
