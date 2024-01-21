@@ -13,20 +13,24 @@ spec:
       valuesObject:
         service:
           logLevel: debug
-        backend:
-          type: es
-          es:
-            host: opensearch-cluster-master.opensearch.svc.cluster.local
-            port: 9200
-            index: 'kubernetes_cluster'
-            type: _doc
-            logstash_prefix: kubernetes_cluster
-            logstash_format: true
-            replace_dots: false
-            time_key: '@timestamp'
-            tls_verify: off
-            http_user: admin
-            http_passwd: admin
+        config:
+          outputs: |
+           [OUTPUT]
+               Name opensearch
+               Match infra.*
+               Host opensearch-cluster-master.opensearch.svc.cluster.local
+               Port 9200
+               Logstash_Format On
+               Logstash_Prefix infra
+               Retry_Limit False
+               HTTP_User admin
+               HTTP_Passwd admin
+               tls On
+               tls.verify Off
+               Include_Tag_Key On
+               Trace_Error On
+               Write_Operation create
+               Replace_Dots On
         metrics:
           enabled: true
           namespace: fluentbit
