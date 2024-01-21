@@ -14,7 +14,7 @@ spec:
         backend:
           type: es
           es:
-            host: opensearch.my-cluster.svc.cluster.local
+            host: opensearch-cluster-master.opensearch.svc.cluster.local
             port: 9200
             index: 'kubernetes_cluster'
         metrics:
