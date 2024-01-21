@@ -20,7 +20,7 @@ spec:
                Match *
                Host opensearch-cluster-master.opensearch.svc.cluster.local
                Port 9200
-               #Logstash_Format On
+               Logstash_Format On
                #Logstash_Prefix infra
                Retry_Limit False
                HTTP_User admin
