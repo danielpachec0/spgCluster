@@ -30,6 +30,7 @@ spec:
                #Include_Tag_Key On
                #Trace_Error On
                Write_Operation create
+               Suppress_Type_Name On
                #Replace_Dots On
         metrics:
           enabled: true
