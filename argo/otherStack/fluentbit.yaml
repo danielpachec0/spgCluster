@@ -25,12 +25,12 @@ spec:
                Retry_Limit False
                HTTP_User admin
                HTTP_Passwd admin
-               tls On
+               #tls On
                tls.verify Off
-               Include_Tag_Key On
-               Trace_Error On
+               #Include_Tag_Key On
+               #Trace_Error On
                Write_Operation create
-               Replace_Dots On
+               #Replace_Dots On
         metrics:
           enabled: true
           namespace: fluentbit
