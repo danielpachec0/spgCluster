@@ -22,6 +22,9 @@ spec:
             logstash_format: true
             replace_dots: false
             time_key: '@timestamp'
+            tls_verify: off
+            http_user: admin
+            http_passwd: admin
         metrics:
           enabled: true
           namespace: fluentbit
