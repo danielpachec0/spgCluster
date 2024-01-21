@@ -17,7 +17,7 @@ spec:
           outputs: |
            [OUTPUT]
                Name opensearch
-               Match kubernetes.*
+               Match *
                Host opensearch-cluster-master.opensearch.svc.cluster.local
                Port 9200
                #Logstash_Format On
