@@ -10,6 +10,11 @@ spec:
     repoURL: https://opensearch-project.github.io/helm-charts
     targetRevision: 2.17.2
     helm:
+      valuesObject:
+        replicas: 1
+        opensearch.yml: |
+          compatibility:
+            override_main_response_version: true
       releaseName: opensearch
   destination:
     server: "https://kubernetes.default.svc"
