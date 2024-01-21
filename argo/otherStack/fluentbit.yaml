@@ -25,7 +25,7 @@ spec:
                Retry_Limit False
                HTTP_User admin
                HTTP_Passwd admin
-               #tls On
+               tls On
                tls.verify Off
                #Include_Tag_Key On
                #Trace_Error On
