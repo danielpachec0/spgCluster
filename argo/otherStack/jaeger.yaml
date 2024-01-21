@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jaeger
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: jaeger
+    repoURL: https://jaegertracing.github.io/helm-charts
+    targetRevision: 0.73.1
+    helm:
+      valuesObject:
+        provisionDataStore:
+          cassandra: false
+        storage:
+          type: elasticsearch
+          elasticsearch:
+            scheme: https
+            host: opensearch-cluster-master.opensearch.svc.cluster.local
+            port: 9200
+            anonymous: false
+            user: admin
+            usePassword: true
+            password: admin
+            cmdlineParams:
+              es.tls.enabled: false
+              es.tls.skip-host-verify: false
+          options:
+            es:
+              server-urls: opensearch-cluster-master.opensearch.svc.cluster.local:9200
+              index-prefix: jaeger
+              username: admin
+              password: admin
+      releaseName: jaeger
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: jaeger
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
