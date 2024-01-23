@@ -20,9 +20,9 @@ spec:
                     #- fluentbit-fluent-bit.fluentbit.svc.cluster.local:2020/api/v1/metrics/prometheus
                       #- opesnearch
                     - argocd-applicationset-controller.argocd.svc.cluster.local:8080/metrics
-                    - jaeger-query.jaeger.svc.cluster.local:16687/metrics  
-                    - jaeger-agent.jaeger.svc.cluster.local:14271/metrics  
-                    - jaeger-collector.jaeger.svc.cluster.local:14269/metrics  
+                    - jaeger-query.jaeger.svc.cluster.local:16687 
+                    - jaeger-agent.jaeger.svc.cluster.local:14271
+                    - jaeger-collector.jaeger.svc.cluster.local:14269
         namespaceOverride: kube-prometheus-stack
       releaseName: kube-prometheus-stack
   destination:
