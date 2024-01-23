@@ -14,6 +14,12 @@ spec:
         prometheus:
           prometheusSpec:
             additionalScrapeConfigs:
+              - job_name: opensearch
+                scrape_interval: 10s
+                metrics_path: "/_prometheus/metrics"
+                static_configs:
+                  - targets:
+                    - opensearch-cluster-master.opensearch.svc.cluster.local:9200
               - job_name: 'fluentbit'
                 metrics_path: /api/v1/metrics/prometheus
                 static_configs:
