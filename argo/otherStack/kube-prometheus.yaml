@@ -14,15 +14,21 @@ spec:
         prometheus:
           prometheusSpec:
             additionalScrapeConfigs:
-              - job_name: 'loki'
+              - job_name: 'fluentbit'
+                metrics_path: /api/v1/metrics/prometheus
                 static_configs:
-                  - targets: 
-                    #- fluentbit-fluent-bit.fluentbit.svc.cluster.local:2020/api/v1/metrics/prometheus
-                      #- opesnearch
-                    - argocd-applicationset-controller.argocd.svc.cluster.local:8080
+                  - targets:
+                    - fluentbit-fluent-bit.fluentbit.svc.cluster.local:2020
+              - job_name: 'jaeger'
+                static_configs:
+                  - targets:
                     - jaeger-query.jaeger.svc.cluster.local:16687 
                     - jaeger-agent.jaeger.svc.cluster.local:14271
                     - jaeger-collector.jaeger.svc.cluster.local:14269
+              - job_name: 'argo'
+                static_configs:
+                  - targets: 
+                    - argocd-applicationset-controller.argocd.svc.cluster.local:8080
         namespaceOverride: kube-prometheus-stack
       releaseName: kube-prometheus-stack
   destination:
