@@ -16,6 +16,12 @@ spec:
             additionalScrapeConfigs:
               - job_name: opensearch
                 scrape_interval: 10s
+                scheme: https
+                basic_auth:
+                  username: 'admin'
+                  password: 'admin'
+                tls_config:
+                  insecure_skip_verify: true
                 metrics_path: "/_prometheus/metrics"
                 static_configs:
                   - targets:
