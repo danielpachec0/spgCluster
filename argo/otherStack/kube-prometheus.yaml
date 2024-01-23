@@ -17,7 +17,7 @@ spec:
               - job_name: 'loki'
                 static_configs:
                   - targets: 
-                    - fluentbit-fluent-bit.fluentbit.svc.cluster.local:2020/api/v1/metrics/prometheus
+                    #- fluentbit-fluent-bit.fluentbit.svc.cluster.local:2020/api/v1/metrics/prometheus
                       #- opesnearch
                     - argocd-applicationset-controller.argocd.svc.cluster.local:8080/metrics
                     - jaeger-query.jaeger.svc.cluster.local:16687/metrics  
