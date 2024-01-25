@@ -19,7 +19,7 @@ spec:
                   - targets: ['tempo.tempo.svc.cluster.local:3100']
               - job_name: 'promtail'
                 static_configs:
-                  - targets: ['promtail.loki.svc.cluster.local:3101']
+                  - targets: ['promtail-service.loki.svc.cluster.local:3101']
               - job_name: 'loki'
                 static_configs:
                   - targets: ['loki.loki.svc.cluster.local:3100']
