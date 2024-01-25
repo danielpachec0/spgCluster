@@ -10,7 +10,10 @@ spec:
     repoURL: https://grafana.github.io/helm-charts
     targetRevision: 6.15.3
     helm:
-      #valuesObject:
+      valuesObject:
+        service:
+          type: clusterIP
+          prot: 3101
       releaseName: promtail
   destination:
     server: "https://kubernetes.default.svc"
