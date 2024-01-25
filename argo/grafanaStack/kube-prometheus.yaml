@@ -14,6 +14,9 @@ spec:
         prometheus:
           prometheusSpec:
             additionalScrapeConfigs:
+              - job_name: 'tempo'
+                static_configs:
+                  - targets: ['tempo.tempo.svc.cluster.local:3100']
               - job_name: 'loki'
                 static_configs:
                   - targets: ['loki.loki.svc.cluster.local:3100']
