@@ -9,3 +9,5 @@ spec:
     configMap:
       name: init-test-config
       file: initTest.js
+  runner:
+    image: dap5/custom_k6:v1
