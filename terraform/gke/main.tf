@@ -24,7 +24,7 @@ resource "google_container_cluster" "primary" {
   vertical_pod_autoscaling {
     enabled = false
   }
-  logging_service = "none"
+  logging_service    = "none"
   monitoring_service = "none"
   addons_config {
     horizontal_pod_autoscaling {

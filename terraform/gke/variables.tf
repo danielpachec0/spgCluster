@@ -1,5 +1,5 @@
 variable "node_count" {
-  type = number
+  type    = number
   default = 1
 }
 
