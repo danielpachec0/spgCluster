@@ -11,6 +11,18 @@ spec:
     targetRevision: 0.73.1
     helm:
       valuesObject:
+        otelCollector:
+          enabled: true
+          config:
+            exporters:
+              jaeger:
+                protocol: gRPC
+                endpoint: jaeger-collector.jaeger.svc.cluster.local:14250
+              service:
+                pipelines:
+                  traces:
+                    receivers: [otlp]
+                    exporters: [jaeger]
         agent:
           serviceMonitor:
             enabled: true
