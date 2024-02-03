@@ -11,13 +11,12 @@ export const options = {
 const endpoint = "jaeger-collector.jaeger.svc.cluster.local:14268"
 const client = new tracing.Client({
     endpoint,
-    exporter: tracing.EXPORTER_JAEGER,
+    exporter: tracing.EXPORTER_OTLP,
     insecure: true,
 });
 
 
 export default function () {
-    console.log(tracing.EXPORTER_JAEGER)
     let pushSizeTraces = randomIntBetween(2,3);
     let pushSizeSpans = 0;
     let t = [];
