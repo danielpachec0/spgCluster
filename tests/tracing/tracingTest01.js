@@ -11,7 +11,8 @@ export const options = {
 const endpoint = "jaeger-collector.jaeger.svc.cluster.local:14250"
 const client = new tracing.Client({
     endpoint,
-    exporter: tracing.EXPORTER_OTLP,
+    //exporter: tracing.EXPORTER_OTLP,
+    exporter: tracing.EXPORTER_JAEGER,
     insecure: true,
 });
 
