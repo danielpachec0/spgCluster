@@ -17,6 +17,7 @@ const client = new tracing.Client({
 
 
 export default function () {
+    console.log(tracing.EXPORTER_JAEGER)
     let pushSizeTraces = randomIntBetween(2,3);
     let pushSizeSpans = 0;
     let t = [];
