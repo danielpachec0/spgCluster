@@ -8,7 +8,7 @@ export const options = {
     duration: "2m",
 };
 
-const endpoint = __ENV.ENDPOINT || " jaeger-collector.jaeger.svc.cluster.local:14268/api/traces"
+const endpoint = "jaeger-collector.jaeger.svc.cluster.local:14268/api/traces"
 const client = new tracing.Client({
     endpoint,
     exporter: tracing.EXPORTER_OTLP,
