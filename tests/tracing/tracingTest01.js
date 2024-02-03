@@ -7,7 +7,8 @@ export const options = {
     duration: "20m",
 };
 
-const endpoint = "tempo.tempo.svc.cluster.local:4317"
+//const endpoint = "tempo.tempo.svc.cluster.local:4317"
+const endpoint = "jaeger-collector.jaeger.svc.cluster.local:14250"
 const client = new tracing.Client({
     endpoint,
     exporter: tracing.EXPORTER_OTLP,
