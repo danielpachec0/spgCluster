@@ -20,7 +20,8 @@ spec:
           service:
             otlp:
               grpc:
-                port: 14500
+                name: otlp-grpc
+                port: 4317
         query:
           serviceMonitor:
             enabled: true
