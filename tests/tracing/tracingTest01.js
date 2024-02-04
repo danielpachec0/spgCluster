@@ -12,7 +12,7 @@ export const options = {
 const endpoint = "otel-collector-opentelemetry-collector.jaeger.svc.cluster.local:4317"
 const client = new tracing.Client({
     endpoint,
-    exporter: "otel",
+    exporter: tracing.EXPORTER_OTLP,
     insecure: true,
 });
 
