@@ -18,6 +18,14 @@ spec:
               endpoint: jaeger-collector.jaeger.svc.cluster.local:14250
               tls:
                 insecure: true
+          processors:
+            batch:
+          service:
+            pipelines:
+              traces:
+                receivers: [otlp]
+                exporters: [otpl/jaeger]
+                processors: [batch]
       releaseName: otel-collector
   destination:
     server: "https://kubernetes.default.svc"
