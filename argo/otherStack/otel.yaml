@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: otel-collector
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: opentelemetry-collector
+    repoURL: https://jaegertracing.github.io/helm-charts
+    targetRevision: 0.80.1
+    helm:
+      valuesObject:
+      releaseName: otel-collector
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: jaeger
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
