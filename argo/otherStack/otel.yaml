@@ -12,8 +12,8 @@ spec:
     helm:
       valuesObject:
         mode: daemonset
-        config:
-          exporters:
+        config:  
+          receivers:
             jaeger:
               protocols:
                 grpc:
