@@ -20,7 +20,6 @@ spec:
           service:
             otlp:
               grpc:
-                name: jaeger-otlp
                 port: 14500
         query:
           serviceMonitor:
