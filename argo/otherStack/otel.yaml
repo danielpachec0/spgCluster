@@ -11,6 +11,7 @@ spec:
     targetRevision: 0.80.1
     helm:
       valuesObject:
+        mode: deployment
       releaseName: otel-collector
   destination:
     server: "https://kubernetes.default.svc"
