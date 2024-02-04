@@ -11,21 +11,22 @@ spec:
     targetRevision: 0.80.1
     helm:
       valuesObject:
-        mode: daemonset
+        mode: deployment
         config:
+          receivers:
+            otlp:
+              protocols:
+                grpc:
           exporters:
             otlp/jaeger:
               endpoint: jaeger-collector.jaeger.svc.cluster.local:14250
               tls:
                 insecure: true
-          processors:
-            batch:
           service:
             pipelines:
               traces:
                 receivers: [otlp]
-                exporters: [otpl/jaeger]
-                processors: [batch]
+                exporters: [otlp/jaeger]
       releaseName: otel-collector
   destination:
     server: "https://kubernetes.default.svc"
