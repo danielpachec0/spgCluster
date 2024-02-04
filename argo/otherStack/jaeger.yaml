@@ -17,6 +17,11 @@ spec:
         collector:
           serviceMonitor:
             enabled: true
+          service:
+            otlp:
+              grpc:
+                name: jaeger-otlp
+                port: 14500
         query:
           serviceMonitor:
             enabled: true
