@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     chart: opentelemetry-collector
-    repoURL: https://jaegertracing.github.io/helm-charts
+    repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
     targetRevision: 0.80.1
     helm:
       valuesObject:
