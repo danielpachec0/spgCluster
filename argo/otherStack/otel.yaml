@@ -17,7 +17,7 @@ spec:
             jaeger:
               protocols:
                 grpc:
-                  endpoint: "jaeger-collector.jaeger.svc.cluster.local:14250"
+                  #endpoint: "jaeger-collector.jaeger.svc.cluster.local:14250"
                     # service:
                     #pipelines:
                     #traces:
