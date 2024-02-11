@@ -1,0 +1,13 @@
+apiVersion: k6.io/v1alpha1
+kind: K6
+metadata:
+  name: k6-sample
+  namespace: k6
+spec:
+  parallelism: 50
+  script:
+    configMap:
+      name: log-test
+      file: logging.js
+  runner:
+    image: dap5/custom_k6:v2
