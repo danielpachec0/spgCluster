@@ -13,7 +13,7 @@ spec:
       releaseName: opensearch-dasboards
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: opensearch
+    namespace: opensearch-dash
   syncPolicy:
     automated:
       prune: true

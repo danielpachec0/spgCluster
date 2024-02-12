@@ -42,7 +42,7 @@ spec:
       releaseName: fluentbit
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: fluentbit
+    namespace: opensearch
   syncPolicy:
     automated:
       prune: true
