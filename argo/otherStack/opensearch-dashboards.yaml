@@ -9,7 +9,10 @@ spec:
     chart: opensearch-dashboards
     repoURL: https://opensearch-project.github.io/helm-charts 
     targetRevision: 2.15.1
-    helm:  
+    helm:
+      valuesObject:
+        opensearchHosts: "https://opensearch-cluster-master.opensearch.svc.cluster.local:9200"
+
       releaseName: opensearch-dasboards
   destination:
     server: "https://kubernetes.default.svc"
