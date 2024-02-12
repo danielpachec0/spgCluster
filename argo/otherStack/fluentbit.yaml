@@ -11,10 +11,28 @@ spec:
     targetRevision: 0.40.0
     helm:
       valuesObject:
+        daemonset:
+          enabled: true
         logLevel: debug
-        service:
-          logLevel: debug
         config:
+          service: |
+            [SERVICE]
+                Daemon Off
+                Parsers_File /opt/bitnami/fluent-bit/conf/parsers.conf
+                Config_Watch On
+                HTTP_Server On
+                HTTP_Listen 0.0.0.0
+          inputs: |
+            [INPUT]
+                Name              tail
+                Tag               kube.*
+                Path              /var/log/containers/*.log
+                multiline.parser  docker
+                Mem_Buf_Limit     5MB
+                Skip_Long_Lines   On
+                Refresh_Interval  10
+                Buffer_Chunk_Size 64KB
+                Buffer_Max_Size   128KB 
           outputs: |
            [OUTPUT]
                Name opensearch
