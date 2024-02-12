@@ -30,27 +30,36 @@ spec:
                 multiline.parser  docker
                 Mem_Buf_Limit     5MB
                 Skip_Long_Lines   On
-                Refresh_Interval  10
-                Buffer_Chunk_Size 64KB
-                Buffer_Max_Size   128KB 
+                Refresh_Interval  5
+          filters: |
+            [FILTER]
+                Name                kubernetes
+                Match               kube.*
+                Kube_URL            https://kubernetes.default.svc:443
+                Kube_CA_File        /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+                Kube_Token_File     /var/run/secrets/kubernetes.io/serviceaccount/token
+                Merge_Log           On
+                K8S-Logging.Parser  On
+                K8S-Logging.Exclude Off
           outputs: |
            [OUTPUT]
                Name opensearch
                Match *
                Host opensearch-cluster-master.opensearch.svc.cluster.local
                Port 9200
-               #Logstash_Format On
+               Logstash_Format On
                #Logstash_Prefix infra
                Retry_Limit False
                HTTP_User admin
                HTTP_Passwd admin
+               Type _doc
                tls On
                tls.verify Off
                #Include_Tag_Key On
                #Trace_Error On
                Write_Operation create
                Suppress_Type_Name On
-               #Replace_Dots On
+               Replace_Dots On
         metrics:
           enabled: true
           namespace: fluentbit
