@@ -11,6 +11,7 @@ spec:
     targetRevision: 0.40.0
     helm:
       valuesObject:
+        logLevel: debug
         service:
           logLevel: debug
         config:
