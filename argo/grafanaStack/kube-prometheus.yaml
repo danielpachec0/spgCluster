@@ -12,6 +12,9 @@ spec:
     helm:
       valuesObject:
         grafana:
+          ingress:
+            enabled: true
+            ingressClassName: nginx
           additionalDataSources:
             - name: tempo
               type: tempo
