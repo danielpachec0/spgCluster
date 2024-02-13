@@ -23,6 +23,11 @@ spec:
               type: loki
               url: http://loki.loki.svc.cluster.local:3100  
         prometheus:
+          ingress:
+            enabled: true
+            ingressClassName: nginx
+            paths:
+              - /prom
           prometheusSpec:
             additionalScrapeConfigs:
               - job_name: 'tempo'
