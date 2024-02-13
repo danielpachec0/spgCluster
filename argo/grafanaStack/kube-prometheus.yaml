@@ -15,7 +15,6 @@ spec:
           ingress:
             enabled: true
             ingressClassName: nginx
-            path: /grafana
           additionalDataSources:
             - name: tempo
               type: tempo
