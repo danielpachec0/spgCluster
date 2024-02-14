@@ -1,24 +1,34 @@
 import { sleep, check } from 'k6';
-import http from 'k6/http';
+//import http from 'k6/http';
+import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
+import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export let options = {
     duration: '30m',
-    vus: 500,
+    vus: 100,
+    setupTimeout: '4m', 
 };
 
-export default function () {
-    
-    let response = "response"
-    //let response = http.get('http://test.k6.io');
-    console.log(`VU: ${__VU} - Iteration: ${__ITER} - Response time: ${response.timings.duration}ms`);
+const n = randomIntBetween(5000, 5500)
+const s = randomString(n);
 
-    sleep(0.05);
+export function setup() {
+    console.log('Setup function is running...');
+    sleep(150)
+    console.log("starting")
+    return { startTime: new Date().toISOString() };
 }
 
-export function teardown() {
+export default function(data) {
+    
+    let response = "response"
+    console.log(`VU: ${__VU} - Iteration: ${__ITER} - msg: ${s}`);
+    sleep(0.3)
+}
+
+export function teardown(data) {
     console.log('Cleanup tasks are now being performed.');
-    console.log(__VU)
-    if(__VU == 0){
-        console.log("logging from v0")
-    }
+    let endTime = new Date().toISOString();
+    console.log(`Test started at: ${data.startTime}`);
+    console.log(`Test ended at: ${endTime}`);
 }

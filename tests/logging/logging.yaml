@@ -4,7 +4,7 @@ metadata:
   name: k6-sample
   namespace: k6
 spec:
-  parallelism: 50
+  parallelism: 100
   script:
     configMap:
       name: log-test

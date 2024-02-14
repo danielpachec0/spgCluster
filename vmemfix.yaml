@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: adjust-vm-max-map-count
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: adjust-vm-max-map-count
+  template:
+    metadata:
+      labels:
+        name: adjust-vm-max-map-count
+    spec:
+      hostPID: true
+      containers:
+      - name: adjust-vm
+        image: busybox
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          privileged: true
+        command: ["nsenter"]
+        args: ["-t", "1", "-m", "-u", "-n", "-i", "--", "sysctl", "-w", "vm.max_map_count=262144"]
+        volumeMounts:
+        - name: sys
+          mountPath: /sys
+      volumes:
+      - name: sys
+        hostPath:
+          path: /sys
+
