@@ -4,5 +4,5 @@ variable "do_token" {
 
 variable "node_count" {
   type    = number
-  default = 1
+  default = 3
 }
