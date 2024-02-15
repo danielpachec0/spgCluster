@@ -62,10 +62,8 @@ resource "google_container_node_pool" "primary_nodes" {
     }
     oauth_scopes = []
     disk_size_gb = 50
-
-
     preemptible  = true
-    machine_type = "e2-medium"
+    machine_type = "e2-standard-4"
     metadata = {
       disable-legacy-endpoints = "true"
     }
