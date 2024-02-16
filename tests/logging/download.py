@@ -59,7 +59,21 @@ prometheus_url = 'http://localhost:9090'
 #     ("2024-02-15T21:10:31.033Z", "2024-02-15T21:40:31.380Z"),
 # ]
 
-inps = [("2024-02-15T12:30:54.009Z", "2024-02-15T22:40:31.380Z")]
+# inps = [
+#     ("2024-02-16T12:53:59.105Z", "2024-02-16T13:23:59.394Z"),
+#     ("2024-02-16T13:39:59.236Z", "2024-02-16T14:09:59.285Z"),
+#     ("2024-02-16T14:24:18.506Z", "2024-02-16T14:54:18.925Z"),
+#     ("2024-02-16T15:05:39.825Z", "2024-02-16T15:35:40.091Z"),
+#     ("2024-02-16T15:49:43.344Z", "2024-02-16T16:19:43.644Z"),
+#     ("2024-02-16T16:27:22.139Z", "2024-02-16T16:57:22.520Z"),
+#     ("2024-02-16T17:16:37.026Z", "2024-02-16T17:46:37.166Z"),
+#     ("2024-02-16T18:02:17.491Z", "2024-02-16T18:32:18.179Z")
+# ]
+
+inps = [
+    ("2024-02-16T11:53:59.105Z", "2024-02-16T19:32:18.179Z")
+]
+
 
 
 qCpu = 'sum(rate(container_cpu_usage_seconds_total{namespace="loki", container!="", container!="POD"}[5m])) by (namespace)'
@@ -84,8 +98,8 @@ queries = [(qCpu, "cpu"), (IqCpu, "Icpu"), (qmem, "mem"), (qmemSet, "memSet"),
 
 for i in inps:
     print(".")
-    os.system(f'mkdir -p lokiDay2/{i[0]}')
+    os.system(f'mkdir -p lokiDay3/{i[0]}')
     for j in queries:
-        output_file = "lokiDay2"+"/"+i[0]+"/"+j[1]
+        output_file = "lokiDay3"+"/"+i[0]+"/"+j[1]
         data = prom_query(prometheus_url, j[0], i[0], i[1], '5s')
         prom_to_csv(data, output_file)
