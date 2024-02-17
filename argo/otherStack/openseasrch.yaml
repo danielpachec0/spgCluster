@@ -11,7 +11,9 @@ spec:
     targetRevision: 2.17.2
     helm:
       valuesObject:
-        config:
+        persistence:
+            size: 100Gi
+        config: 
           opensearch.yml: |
             logger.org.opensearch.index.reindex: debug
             cluster.name: opensearch-cluster
