@@ -52,7 +52,7 @@ spec:
       releaseName: jaeger
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: jaeger
+    namespace: opensearch
   syncPolicy:
     automated:
       prune: true
