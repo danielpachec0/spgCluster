@@ -10,7 +10,11 @@ spec:
     repoURL: https://grafana.github.io/helm-charts
     targetRevision: 1.8.4
     helm:
-      #valuesObject:
+      valuesObject:
+        traces:
+          otlp:
+            grpc:
+              enabled: true
       releaseName: tempo
   destination:
     server: "https://kubernetes.default.svc"
