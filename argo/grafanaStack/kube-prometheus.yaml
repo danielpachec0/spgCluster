@@ -27,7 +27,15 @@ spec:
             additionalScrapeConfigs:
               - job_name: 'tempo'
                 static_configs:
-                  - targets: ['tempo.tempo.svc.cluster.local:3100']
+                  - targets: 
+                    - 'tempo-compactor.tempo.svc.cluster.local:3100'
+                    - 'tempo-distributor-discovery.tempo.svc.cluster.local:3100'    
+                    - 'tempo-gossip-ring.tempo.svc.cluster.local:3100'      
+                    - 'tempo-ingester.tempo.svc.cluster.local:3100'                  
+                    - 'tempo-ingester-discovery.tempo.svc.cluster.local:3100'        
+                    - 'tempo-querier.tempo.svc.cluster.local:3100'                   
+                    - 'tempo-query-frontend.tempo.svc.cluster.local:3100'           
+                    - 'tempo-query-frontend-discovery.tempo.svc.cluster.local:3100'
               - job_name: 'promtail'
                 static_configs:
                   - targets: ['promtail-service.loki.svc.cluster.local:3101']
