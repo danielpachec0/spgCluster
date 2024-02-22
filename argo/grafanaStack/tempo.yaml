@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    chart: tempo
+    chart: tempo-distributed
     repoURL: https://grafana.github.io/helm-charts
-    targetRevision: 1.7.1
+    targetRevision: 1.8.4
     helm:
       #valuesObject:
       releaseName: tempo
