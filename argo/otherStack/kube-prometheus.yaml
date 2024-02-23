@@ -17,6 +17,14 @@ spec:
             ingressClassName: nginx
         prometheus:
           prometheusSpec:
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 50Gi
+                  storageClassName: "standard"
             additionalScrapeConfigs:
               - job_name: opensearch
                 scrape_interval: 10s
