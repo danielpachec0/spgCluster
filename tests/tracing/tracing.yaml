@@ -4,10 +4,13 @@ metadata:
   name: k6-sample
   namespace: k6
 spec:
-  parallelism: 1
+  parallelism: 100
   script:
     configMap:
       name: tracing-test-config
       file: tracingTest01.js
   runner:
     image: dap5/custom_k6:v2
+    env:
+      - name: TEST_IDENTIFIER
+        value: "${TEST_IDENTIFIER}"

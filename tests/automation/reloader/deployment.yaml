@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k6-reloader
+  namespace: k6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k6-reloader
+  template:
+    metadata:
+      labels:
+        app: k6-reloader
+    spec:
+      securityContext:
+        fsGroup: 1000
+      serviceAccountName: k6
+      containers:
+      - name: k6-reloader
+        image: dap5/k6-reloader-base:v1
+        command: ["/bin/bash", "/scripts/reload.sh"]
+        volumeMounts:
+        - name: script-volume
+          mountPath: /scripts
+      volumes:
+      - name: script-volume
+        configMap:
+          name: k6-reloader-config
+

@@ -1,0 +1,25 @@
+FROM debian:buster
+
+# Install curl, uuid-runtime, and gettext (for envsubst)
+# Also install other dependencies that might be needed
+RUN apt-get update && apt-get install -y \
+    curl \
+    uuid-runtime \
+    gettext-base \
+    ca-certificates \
+    gnupg \
+    lsb-release
+
+# Download and install the kubectl binary
+RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
+    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list && \
+    apt-get update && \
+    apt-get install -y kubectl
+
+# Clean up to reduce image size
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Set the working directory (optional)
+WORKDIR /workdir
+

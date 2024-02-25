@@ -11,3 +11,6 @@ spec:
       file: logging.js
   runner:
     image: dap5/custom_k6:v2
+    env:
+      - name: TEST_IDENTIFIER
+        value: "${TEST_IDENTIFIER}"
