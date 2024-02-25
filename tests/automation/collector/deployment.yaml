@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k6-collector
+  namespace: k6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k6-collector
+  template:
+    metadata:
+      labels:
+        app: k6-collector
+    spec:
+      containers:
+      - name: k6-collector
+        image: dap5/k6-collector:v1
+        command: ["/collector"]
+        ports:
+        - containerPort: 8080 
+        volumeMounts:
+        - name: app-storage
+          mountPath: /app
+      volumes:
+      - name: app-storage
+        persistentVolumeClaim:
+          claimName: k6-collector
+
