@@ -1,10 +1,11 @@
+import http from 'k6/http';
 import { sleep, check } from 'k6';
 //import http from 'k6/http';
 import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export let options = {
-    duration: '30m',
+    duration: '15m',
     vus: 100,
     setupTimeout: '4m', 
 };
@@ -29,6 +30,12 @@ export default function(data) {
 export function teardown(data) {
     console.log('Cleanup tasks are now being performed.');
     let endTime = new Date().toISOString();
-    console.log(`Test started at: ${data.startTime}`);
-    console.log(`Test ended at: ${endTime}`);
+    const testRunId = __ENV.TEST_IDENTIFIER; 
+    http.post('http://k6-collector-service.k6.svc.cluster.local:8080/tests', JSON.stringify({
+         uuid: testRunId,
+         start: data.startTime,
+         end: endTime
+     }), {
+         headers: { 'Content-Type': 'application/json' },
+     });
 }

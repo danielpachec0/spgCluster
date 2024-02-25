@@ -1,12 +1,15 @@
+import http from 'k6/http';
 import {sleep} from 'k6';
 import tracing from 'k6/x/tracing';
 import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-    vus: 1,
-    duration: "20m",
+    vus: 100,
+    duration: "30m",
+    setupTimeout: '4m', 
 };
 
+//const endpoint = "tempo-distributor.tempo.svc.cluster.local:4317"
 //const endpoint = "tempo.tempo.svc.cluster.local:4317"
 const endpoint = "jaeger-collector.jaeger.svc.cluster.local:4317"
 
@@ -63,14 +66,30 @@ const traceTemplates = [
     },
 ]
 
-export default function () {
+export function setup() {
+    console.log('Setup function is running...');
+    sleep(60)
+    console.log("starting")
+    return { startTime: new Date().toISOString() };
+}
+
+export default function (data) {
     const templateIndex = randomIntBetween(0, traceTemplates.length-1)
     const gen = new tracing.TemplatedGenerator(traceTemplates[templateIndex])
     client.push(gen.traces())
 
-    sleep(randomIntBetween(1, 5));
+    sleep(0.3);
 }
 
-export function teardown() {
+export function teardown(data) {
     client.shutdown();
-}
+    console.log('Cleanup tasks are now being performed.');
+    let endTime = new Date().toISOString();
+    const testRunId = __ENV.TEST_IDENTIFIER; 
+    http.post('http://k6-collector-service.k6.svc.cluster.local:8080/tests', JSON.stringify({
+         uuid: testRunId,
+         start: data.startTime,
+         end: endTime
+     }), {
+         headers: { 'Content-Type': 'application/json' },
+     });}
