@@ -11,6 +11,9 @@ spec:
     targetRevision: 1.8.4
     helm:
       valuesObject:
+        ingester:
+           persistence:
+             enabled: true
         traces:
           otlp:
             grpc:
