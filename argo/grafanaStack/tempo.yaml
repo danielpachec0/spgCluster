@@ -1,3 +1,35 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: tempo
+#   namespace: argocd
+# spec:
+#   project: default
+#   source:
+#     chart: tempo-distributed
+#     repoURL: https://grafana.github.io/helm-charts
+#     targetRevision: 1.8.4
+#     helm:
+#       valuesObject:
+#         ingester:
+#            persistence:
+#              enabled: true
+#         traces:
+#           otlp:
+#             grpc:
+#               enabled: true
+#       releaseName: tempo
+#   destination:
+#     server: "https://kubernetes.default.svc"
+#     namespace: tempo
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+#     syncOptions:
+#       - CreateNamespace=true
+#       - ServerSideApply=true
+#
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -6,18 +38,17 @@ metadata:
 spec:
   project: default
   source:
-    chart: tempo-distributed
+    chart: tempo
     repoURL: https://grafana.github.io/helm-charts
-    targetRevision: 1.8.4
+    targetRevision: 1.7.1
     helm:
       valuesObject:
-        ingester:
-           persistence:
-             enabled: true
-        traces:
-          otlp:
-            grpc:
-              enabled: true
+        persistence:
+          enabled: true
+          accessModes:
+            - ReadWriteOnce
+          size: 50Gi
+
       releaseName: tempo
   destination:
     server: "https://kubernetes.default.svc"
