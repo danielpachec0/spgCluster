@@ -9,12 +9,36 @@ spec:
     chart: tempo-distributed
     repoURL: https://grafana.github.io/helm-charts
     targetRevision: 1.8.4
-    helm:
+    helm: 
       valuesObject:
-        ingester:
-          replicas: 1
+        backend:                                          
+          s3:
+            bucket: tempo                                   
+            endpoint: minio-s3.minio.svc.cluster.local  
+            accessKey: minio                            
+            secretKey: minio123                          
+            insecure: true                                 
+        storage:
+          trace:
+            backend: local
+            local:
+              path: /var/tempo/traces
+            wal:
+              path: /var/tempo/wal
+        minio:
+          enabled: true
+          defaultBucket:
+            enabled: true
+            name: tempo
+          accessKey: minio
+          secretKey: minio123
           persistence:
             enabled: true
+            size: 50Gi
+        ingester:
+          replicas: 3
+          persistence:
+            enabled: false
         traces:
           otlp:
             grpc:
