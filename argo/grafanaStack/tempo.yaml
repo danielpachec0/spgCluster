@@ -35,18 +35,18 @@ spec:
           persistence:
             enabled: true
             size: 50Gi
-        distributor:
-          resources:
-            requests:
-              memory: 512Mi
-            limits:
-              memory: 1Gi
+        # distributor:
+        #   resources:
+        #     requests:
+        #       memory: 512Mi
+        #     limits:
+        #       memory: 1Gi
         ingester:
-          resources:
-            requests:
-              memory: 512Mi
-            limits:
-              memory: 1Gi
+          # resources:
+          #   requests:
+          #     memory: 512Mi
+          #   limits:
+          #     memory: 1Gi
           replicas: 3
           persistence:
             enabled: false
