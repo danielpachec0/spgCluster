@@ -28,25 +28,15 @@ spec:
               endpoint: 'tempo-minio.tempo.svc.cluster.local:9000'
               insecure: true
         minio:
-          enabled: true
-          defaultBucket:
-            enabled: true
-            name: tempo
+          enabled: true  
+          buckets:
+            - name: tempo-traces
+              policy: none
+              purge: false
           persistence:
             enabled: true
             size: 50Gi
-        # distributor:
-        #   resources:
-        #     requests:
-        #       memory: 512Mi
-        #     limits:
-        #       memory: 1Gi
         ingester:
-          # resources:
-          #   requests:
-          #     memory: 512Mi
-          #   limits:
-          #     memory: 1Gi
           replicas: 3
           persistence:
             enabled: false
@@ -66,33 +56,3 @@ spec:
       - CreateNamespace=true
       - ServerSideApply=true
 
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: tempo
-#   namespace: argocd
-# spec:
-#   project: default
-#   source:
-#     chart: tempo
-#     repoURL: https://grafana.github.io/helm-charts
-#     targetRevision: 1.7.1
-#     helm:
-#       valuesObject:
-#         persistence:
-#           enabled: true
-#           accessModes:
-#             - ReadWriteOnce
-#           size: 50Gi
-#
-#       releaseName: tempo
-#   destination:
-#     server: "https://kubernetes.default.svc"
-#     namespace: tempo
-#   syncPolicy:
-#     automated:
-#       prune: true
-#       selfHeal: true
-#     syncOptions:
-#       - CreateNamespace=true
-#       - ServerSideApply=true
