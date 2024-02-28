@@ -19,7 +19,7 @@ spec:
         replicas: 4
         buckets:
           - name: tempo-traces
-            policy: tempo-traces
+            policy: none
             purge: false
         persistence:
           size: 25Gi
