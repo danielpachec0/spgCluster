@@ -22,7 +22,7 @@ spec:
           trace:
             backend: s3
             s3:
-              access_key: 'grafana-tempo'
+              access_key: 'admin'
               secret_key: 'supersecret'
               bucket: 'tempo-traces'
               endpoint: 'minio.minio.svc.cluster.local:9000'
