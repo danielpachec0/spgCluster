@@ -24,7 +24,7 @@ spec:
         persistence:
           size: 25Gi
         rootUser: "admin"
-        rootPassword: "admin"
+        rootPassword: "supersecret"
       releaseName: minio
   destination:
     server: "https://kubernetes.default.svc"
