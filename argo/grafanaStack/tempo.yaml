@@ -27,15 +27,15 @@ spec:
               bucket: 'tempo-traces'
               endpoint: 'tempo-minio.tempo.svc.cluster.local:9000'
               insecure: true
-        minio:
-          enabled: true  
-          buckets:
-            - name: tempo-traces
-              policy: none
-              purge: false
-          persistence:
-            enabled: true
-            size: 50Gi
+        # minio:
+        #   enabled: true  
+        #   buckets:
+        #     - name: tempo-traces
+        #       policy: none
+        #       purge: false
+        #   persistence:
+        #     enabled: true
+        #     size: 50Gi
         ingester:
           replicas: 3
           persistence:
