@@ -17,9 +17,6 @@ spec:
             policy: tempo-traces
             purge: false
         persistence:
-          enabled: true
-          volumeName: "minio-data"
-          accessMode: ReadWriteOnce
           size: 100Gi
         rootUser: "admin"
         rootPassword: "admin"
