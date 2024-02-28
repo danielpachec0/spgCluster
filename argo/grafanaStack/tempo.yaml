@@ -25,7 +25,7 @@ spec:
               access_key: 'grafana-tempo'
               secret_key: 'supersecret'
               bucket: 'tempo-traces'
-              endpoint: 'tempo-minio.tempo.svc.cluster.local:9000'
+              endpoint: 'minio.minio.svc.cluster.local:9000'
               insecure: true
         # minio:
         #   enabled: true  
