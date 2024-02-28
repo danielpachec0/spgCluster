@@ -11,6 +11,7 @@ spec:
     targetRevision: 5.0.15
     helm:
       valuesObject:
+        replicas: 3
         buckets:
           - name: tempo-traces
             policy: tempo-traces
