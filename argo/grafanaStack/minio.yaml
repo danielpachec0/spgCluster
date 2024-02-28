@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: minio
+    repoURL: https://charts.min.io/
+    targetRevision: 5.0.15
+    helm:
+      valuesObject:
+        buckets:
+          - name: tempo-traces
+            policy: tempo-traces
+            purge: false
+        persistence:
+          enabled: true
+          volumeName: "minio-data"
+          accessMode: ReadWriteOnce
+          size: 100Gi
+        rootUser: "admin"
+        rootPassword: "admin"
+      releaseName: minio
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: minio
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
