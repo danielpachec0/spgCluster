@@ -11,11 +11,18 @@ spec:
     targetRevision: 5.0.15
     helm:
       valuesObject:
+        resources:
+          requests:
+            memory: 2Gi
+          limits:
+            memory: 4Gi
         replicas: 4
         buckets:
           - name: tempo-traces
             policy: tempo-traces
             purge: false
+        persistence:
+          size: 25Gi
         rootUser: "admin"
         rootPassword: "admin"
       releaseName: minio
