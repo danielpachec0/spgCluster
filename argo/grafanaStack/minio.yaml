@@ -16,8 +16,6 @@ spec:
           - name: tempo-traces
             policy: tempo-traces
             purge: false
-        persistence:
-          size: 100Gi
         rootUser: "admin"
         rootPassword: "admin"
       releaseName: minio
