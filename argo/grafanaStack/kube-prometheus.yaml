@@ -31,7 +31,7 @@ spec:
                   resources:
                     requests:
                       storage: 50Gi
-                  storageClassName: "standard"
+                  storageClassName: "do-block-storage"
             additionalScrapeConfigs:
               - job_name: 'tempo'
                 static_configs:
