@@ -36,7 +36,9 @@ func main() {
 			log.Fatal(err)
 		}
 		testRunning := true
-		for testRunning {
+		podsRunning := true
+		var status string
+		for testRunning && podsRunning {
 			time.Sleep(1 * time.Second)
 			status, err := client.GetTestStatus("test")
 			if err != nil {
@@ -46,6 +48,14 @@ func main() {
 				log.Println("Test '" + testId + "' finished with status: " + status)
 				testRunning = false
 			}
+
+			podsRunning, err = client.CheckPods()
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+		if status == "finished" {
+			te++
 		}
 		err = client.CleanUp("test")
 		if err != nil {
@@ -53,6 +63,5 @@ func main() {
 		}
 		log.Println("Cooling down for " + strconv.Itoa(cfg.CoolDown) + " seconds")
 		time.Sleep(time.Duration(cfg.CoolDown) * time.Second)
-		te = te + 1
 	}
 }
