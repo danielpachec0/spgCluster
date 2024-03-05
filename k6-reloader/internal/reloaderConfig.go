@@ -7,13 +7,13 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/uuid"
 	"os"
-	"strconv"
 )
 
 type TestConfig struct {
-	Iterations int         `yaml:"iterations"`
-	CoolDown   int         `yaml:"cool-down"`
-	Vars       []VarConfig `yaml:"vars"`
+	Iterations  int         `yaml:"iterations"`
+	CoolDown    int         `yaml:"cool-down"`
+	Parallelism int         `yaml:"parallelism"`
+	Vars        []VarConfig `yaml:"vars"`
 }
 
 type VarConfig struct {
@@ -94,15 +94,8 @@ func (config TestConfig) CreateTest(iteration int) (*unstructured.Unstructured, 
 	env := []K6EnvVar{
 		{"TEST_IDENTIFIER", testIdentifier},
 	}
-	var p int
 	var err error
 	for _, v := range config.Vars {
-		if v.Name == "K6_VUS" {
-			p, err = strconv.Atoi(v.Value.getValue(iteration))
-			if err != nil {
-				return nil, testIdentifier, err
-			}
-		}
 		env = append(env, K6EnvVar{Name: v.Name, Value: v.Value.getValue(iteration)})
 	}
 
@@ -111,7 +104,7 @@ func (config TestConfig) CreateTest(iteration int) (*unstructured.Unstructured, 
 		Kind:       "K6",
 		Metadata:   v1.ObjectMeta{Name: "test"},
 		Spec: K6TestSpec{
-			Parallelism: p,
+			Parallelism: config.Parallelism,
 			Script: K6script{
 				ConfigMap: ScriptConfig{
 					Name: "reloader-test",
