@@ -40,7 +40,7 @@ func main() {
 		var status string
 		for testRunning && podsRunning {
 			time.Sleep(1 * time.Second)
-			status, err := client.GetTestStatus("test")
+			status, err = client.GetTestStatus("test")
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -57,6 +57,7 @@ func main() {
 		if status == "finished" {
 			te++
 		}
+		log.Println("Cleaning up test " + testId)
 		err = client.CleanUp("test")
 		if err != nil {
 			log.Fatal(err)
