@@ -1,0 +1,12 @@
+iterations: 3
+cool-down: 2
+parallelism: 2
+duration: 5m
+vars:
+  - name: logMsg
+    value:
+      - test1
+      - test2
+      - test3
+  - name: collectorAddress
+    value: http://k6-collector-service.k6.svc.cluster.local:8080/tests
