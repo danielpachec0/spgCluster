@@ -30,7 +30,7 @@ spec:
                   accessModes: ["ReadWriteOnce"]
                   resources:
                     requests:
-                      storage: 50Gi
+                      storage: 35Gi
                   storageClassName: "standard"
                   # storageClassName: "do-block-storage"
             additionalScrapeConfigs:
