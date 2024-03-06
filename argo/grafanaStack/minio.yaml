@@ -22,7 +22,7 @@ spec:
             policy: none
             purge: false
         persistence:
-          size: 20Gi
+          size: 25Gi
         rootUser: "admin"
         rootPassword: "supersecret"
       releaseName: minio
