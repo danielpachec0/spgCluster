@@ -1,0 +1,11 @@
+name: logging
+cool-down: 120
+iterations: 5
+parallelism: [50, 64, 78, 86, 102]
+vars:
+  - name: collectorAddress
+    value: http://k6-collector-service.k6.svc.cluster.local:8080/tests
+  - name:  K6_VUS
+    value: ["50", "64", "78", "86", "102"]
+  - name: K6_DURATION
+    value: 30m
