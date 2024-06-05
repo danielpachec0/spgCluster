@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/danielpachec0/spgCluster
+    targetRevision: HEAD
+    path: argo/ffmpeg
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
