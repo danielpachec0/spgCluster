@@ -9,13 +9,13 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-	"path/filepath"
+	"strconv"
+	"strings"
+	"time"
 )
 
 func main() {
-	http.HandleFunc("GET /ffmpeg", func(w http.ResponseWriter, r *http.Request) {
-		getFfmpeg(w, r)
-	})
+	//curl -X POST localhost:8080/upload -F "video=@/mnt/c/Users/Daniel.Pacheco/Videos/input.gif" -O  -F "command=-movflags faststart -pix_fmt yuv420p"
 	http.HandleFunc("POST /upload", func(w http.ResponseWriter, r *http.Request) {
 		uploadVideo(w, r)
 	})
@@ -24,9 +24,13 @@ func main() {
 	}
 }
 
-func getFfmpeg(w http.ResponseWriter, r *http.Request) {
-	//args := []string{"-i transparent.gif -c:v libvpx -pix_fmt yuva420p -auto-alt-ref 0 transparent.webm"}
-	cmd := exec.Command("ffmpeg", "-i", "input.gif", "-c:v", "libvpx", "-pix_fmt", "yuva420p", "-auto-alt-ref", "0", "transparent.webm")
+// func ffmpeg(args []string) error {
+func ffmpeg(inputPath string, outputPath string, commandStr string) error {
+	args := []string{"-i", inputPath}
+	args = append(args, strings.Split(commandStr, " ")...)
+	args = append(args, outputPath)
+
+	cmd := exec.Command("ffmpeg", args...)
 	var cmdStdOut, cmdStdErr bytes.Buffer
 	cmd.Stdout = &cmdStdOut
 	cmd.Stderr = &cmdStdErr
@@ -34,29 +38,40 @@ func getFfmpeg(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("stdout:", cmdStdOut.String())
 		fmt.Println("stderr:", cmdStdErr.String())
 		log.Println(err)
-		w.WriteHeader(http.StatusInternalServerError)
+		return err
 	}
 	if true {
 		log.Println("stdout:", cmdStdOut.String(), "stderr:", cmdStdErr.String())
 	}
-	w.WriteHeader(http.StatusOK)
+	return nil
 }
 
 func uploadVideo(w http.ResponseWriter, r *http.Request) {
+	id := strconv.FormatInt(time.Now().UnixNano(), 10)
+	inputPath := "uploads/" + id + ".gif"
+	outputPath := "outputs/" + id + ".mp4"
+
 	if r.Method != "POST" {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
 
-	// Parse the multipart form, with a max memory of 32 MB
-	err := r.ParseMultipartForm(32 << 20)
+	err := r.ParseForm()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	// Retrieve the file from form data
-	file, handler, err := r.FormFile("video")
+	// Parse the multipart form, with a max memory of 32 MB
+	err = r.ParseMultipartForm(32 << 20)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	command := r.FormValue("command")
+
+	formFile, _, err := r.FormFile("video")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -64,12 +79,11 @@ func uploadVideo(w http.ResponseWriter, r *http.Request) {
 	defer func(file multipart.File) {
 		err := file.Close()
 		if err != nil {
-
+			log.Fatalf("Failed to close formFile: %s", err)
 		}
-	}(file)
+	}(formFile)
 
-	// Create a destination file
-	dst, err := os.Create(filepath.Join("uploads", handler.Filename))
+	inputFile, err := os.Create(inputPath)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -79,14 +93,51 @@ func uploadVideo(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 
 		}
-	}(dst)
+		err = os.Remove(inputPath)
+		if err != nil {
+			log.Printf("Failed to remove formFile: %s", err)
+		}
+	}(inputFile)
 
-	// Copy the uploaded file to the destination file
-	_, err = io.Copy(dst, file)
+	_, err = io.Copy(inputFile, formFile)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	fmt.Println("File uploaded successfully")
+	err = ffmpeg(inputPath, outputPath, command)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	outputFile, err := os.Open(outputPath)
+	defer func(outputFile *os.File) {
+		err := outputFile.Close()
+		if err != nil {
+			log.Fatal("F")
+		}
+		err = os.Remove(outputPath)
+		if err != nil {
+			log.Printf("Failed to remove formFile: %s", err)
+		}
+	}(outputFile)
+	if err != nil {
+		http.Error(w, "File not found.", 404)
+		return
+	}
+
+	stat, err := outputFile.Stat() // Get the file info
+	if err != nil {
+		http.Error(w, "Could not obtain stat", http.StatusInternalServerError)
+		return
+	}
+
+	// Set the headers
+	w.Header().Set("Content-Disposition", "attachment; filename=vid.mp4")
+	w.Header().Set("Content-Type", "video/mp4")
+	w.Header().Set("Content-Length", fmt.Sprint(stat.Size()))
+
+	// Serve the formFile
+	http.ServeContent(w, r, outputPath, stat.ModTime(), outputFile)
 }
