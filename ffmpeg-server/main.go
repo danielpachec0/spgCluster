@@ -36,6 +36,7 @@ func ffmpeg(inputPath string, outputPath string, commandStr string) error {
 	args = append(args, strings.Split(commandStr, " ")...)
 	args = append(args, outputPath)
 
+	log.Println("Running ffmpeg", args)
 	cmd := exec.Command("ffmpeg", args...)
 	var cmdStdOut, cmdStdErr bytes.Buffer
 	cmd.Stdout = &cmdStdOut
@@ -48,9 +49,7 @@ func ffmpeg(inputPath string, outputPath string, commandStr string) error {
 		log.Println(err)
 		return err
 	}
-	if true {
-		log.Println("stdout:", cmdStdOut.String(), "stderr:", cmdStdErr.String())
-	}
+	log.Println("FFMPEG SUCCESS")
 	return nil
 }
 
@@ -156,5 +155,6 @@ func uploadVideo(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Length", fmt.Sprint(stat.Size()))
 
 	// Serve the formFile
+	log.Println("Request success!")
 	http.ServeContent(w, r, outputPath, stat.ModTime(), outputFile)
 }
