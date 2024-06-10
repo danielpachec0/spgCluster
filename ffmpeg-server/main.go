@@ -15,10 +15,16 @@ import (
 )
 
 func main() {
+	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/plain")
+		w.WriteHeader(http.StatusOK)
+	})
 	//curl -X POST localhost:8080/upload -F "video=@/mnt/c/Users/Daniel.Pacheco/Videos/input.gif" -O  -F "command=-movflags faststart -pix_fmt yuv420p"
 	http.HandleFunc("POST /upload", func(w http.ResponseWriter, r *http.Request) {
 		uploadVideo(w, r)
 	})
+
+	log.Println("Listening on port 8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal(err)
 	}
@@ -35,8 +41,10 @@ func ffmpeg(inputPath string, outputPath string, commandStr string) error {
 	cmd.Stdout = &cmdStdOut
 	cmd.Stderr = &cmdStdErr
 	if err := cmd.Run(); err != nil {
-		fmt.Println("stdout:", cmdStdOut.String())
-		fmt.Println("stderr:", cmdStdErr.String())
+		//fmt.Println("stdout:", cmdStdOut.String())
+		log.Println("FFMPEG ERROR")
+		log.Println("stderr:", cmdStdErr.String())
+		log.Println("------")
 		log.Println(err)
 		return err
 	}
@@ -101,12 +109,14 @@ func uploadVideo(w http.ResponseWriter, r *http.Request) {
 
 	_, err = io.Copy(inputFile, formFile)
 	if err != nil {
+		log.Println("Error:", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	err = ffmpeg(inputPath, outputPath, command)
 	if err != nil {
+		log.Println("Error:", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -123,6 +133,7 @@ func uploadVideo(w http.ResponseWriter, r *http.Request) {
 		}
 	}(outputFile)
 	if err != nil {
+		log.Println("Error:", err)
 		http.Error(w, "File not found.", 404)
 		return
 	}
