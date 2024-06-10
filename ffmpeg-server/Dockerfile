@@ -9,8 +9,6 @@ WORKDIR /app
 COPY go.mod ./
 RUN go mod download
 COPY main.go .
-RUN mkdir -p /uploads
-RUN mkdir -p /outputs
 RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o /go-ffmpeg
 EXPOSE 8080
 CMD ["/go-ffmpeg"]

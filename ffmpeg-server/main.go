@@ -55,17 +55,20 @@ func ffmpeg(inputPath string, outputPath string, commandStr string) error {
 }
 
 func uploadVideo(w http.ResponseWriter, r *http.Request) {
+	log.Println("Received FFMPEG request")
 	id := strconv.FormatInt(time.Now().UnixNano(), 10)
-	inputPath := "uploads/" + id + ".gif"
-	outputPath := "outputs/" + id + ".mp4"
+	inputPath := id + ".gif"
+	outputPath := id + ".mp4"
 
 	if r.Method != "POST" {
+		log.Println("ERROR: Invalid request method")
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
 
 	err := r.ParseForm()
 	if err != nil {
+		log.Println("Error:", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -73,6 +76,7 @@ func uploadVideo(w http.ResponseWriter, r *http.Request) {
 	// Parse the multipart form, with a max memory of 32 MB
 	err = r.ParseMultipartForm(32 << 20)
 	if err != nil {
+		log.Println("Error:", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -81,6 +85,7 @@ func uploadVideo(w http.ResponseWriter, r *http.Request) {
 
 	formFile, _, err := r.FormFile("video")
 	if err != nil {
+		log.Println("Error:", err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
@@ -93,6 +98,7 @@ func uploadVideo(w http.ResponseWriter, r *http.Request) {
 
 	inputFile, err := os.Create(inputPath)
 	if err != nil {
+		log.Println("Error:", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
