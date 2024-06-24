@@ -21,7 +21,7 @@ spec:
               url: http://tempo-query-frontend.tempo.svc.cluster.local:3100
             - name: loki
               type: loki
-              url: http://loki.loki.svc.cluster.local:3100  
+              url: http://loki-read.loki.svc.cluster.local:3100
         prometheus:
           prometheusSpec:
             storageSpec:
