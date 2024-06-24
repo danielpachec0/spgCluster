@@ -8,12 +8,13 @@ spec:
   source:
     chart: promtail
     repoURL: https://grafana.github.io/helm-charts
-    targetRevision: 6.15.3
+    targetRevision: 6.16.0
     helm:
       valuesObject:
-        service:
-          type: clusterIP
-          prot: 3101
+        config:
+          clients:
+            - url: http://loki-gateway.loki.svc.cluster.local:8080/loki/api/v1/push
+              tenant_id: 1
       releaseName: promtail
   destination:
     server: "https://kubernetes.default.svc"
