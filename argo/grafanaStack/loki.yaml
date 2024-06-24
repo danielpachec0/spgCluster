@@ -14,21 +14,7 @@ spec:
         loki:
           auth_enabled: false
           minio:
-            enabled: false
-          storage:
-            type: s3
-            bucketNames:
-              chunks: "chunks"
-              rule: "ruler"
-              admin: "admin"
-            s3:
-              access_key_id: 'admin'
-              secret_access_key: 'supersecret'
-              bucketnames: 'chunks'
-              s3: 'https://minio.minio.svc.cluster.local:9000'
-              endpoint: 'https://minio.minio.svc.cluster.local:9000'
-              insecure: true
-              s3ForcePathStyle: true
+            enabled: true
       releaseName: loki
   destination:
     server: "https://kubernetes.default.svc"

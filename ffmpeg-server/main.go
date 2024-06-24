@@ -45,7 +45,6 @@ func ffmpeg(inputPath string, outputPath string, commandStr string) error {
 		//fmt.Println("stdout:", cmdStdOut.String())
 		log.Println("FFMPEG ERROR")
 		log.Println("stderr:", cmdStdErr.String())
-		log.Println("------")
 		log.Println(err)
 		return err
 	}

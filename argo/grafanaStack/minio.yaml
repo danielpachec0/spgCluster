@@ -18,6 +18,15 @@ spec:
             memory: 4Gi
         replicas: 4
         buckets:
+          - name: chunks
+            police: none
+            purge: false
+          - name: admin
+            police: none
+            purge: false
+          - name: ruler
+            police: none
+            purge: false
           - name: tempo-traces
             policy: none
             purge: false
