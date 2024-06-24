@@ -13,7 +13,7 @@ spec:
       valuesObject:
         config:
           clients:
-            - url: http://loki-gateway.loki.svc.cluster.local:8080/loki/api/v1/push
+            - url: http://loki-write.loki.svc.cluster.local:3100/loki/api/v1/push
               tenant_id: 1
       releaseName: promtail
   destination:
