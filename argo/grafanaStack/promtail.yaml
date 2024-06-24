@@ -11,45 +11,10 @@ spec:
     targetRevision: 6.16.0
     helm:
       valuesObject:
-        extraContainers: [ ]
-        extraVolumes: [ ]
-        extraVolumeMounts: [ ]
-
-        extraInitContainers:
-          - name: set-ulimits
-            image: busybox
-            command: [ "sh", "-c", "ulimit -n 65536" ]
-            securityContext:
-              privileged: true
-
-        extraContainerSecurityContext:
-          ulimits:
-            - name: nofile
-              soft: 65536
-              hard: 65536
-
-        extraPodSecurityContext:
-          fsGroup: 2000
-
         config:
           clients:
             - url: http://loki-write.loki.svc.cluster.local:3100/loki/api/v1/push
               tenant_id: 1
-          server:
-            http_listen_port: 9080
-            grpc_listen_port: 0
-
-          positions:
-            filename: /tmp/positions.yaml
-
-          scrape_configs:
-            - job_name: system
-              static_configs:
-                - targets:
-                    - localhost
-                  labels:
-                    job: varlogs
-                    __path__: /var/log/*log
       releaseName: promtail
   destination:
     server: "https://kubernetes.default.svc"
