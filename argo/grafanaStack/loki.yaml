@@ -44,11 +44,11 @@ spec:
             max_concurrent: 4
         deploymentMode: SimpleScalable
         backend:
-          replicas: 1
+          replicas: 3
         read:
-          replicas: 1
+          replicas: 3
         write:
-          replicas: 2
+          replicas: 3
         # Enable minio for storage
         minio:
           enabled: false
