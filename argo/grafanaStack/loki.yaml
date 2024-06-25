@@ -12,6 +12,19 @@ spec:
     helm:
       valuesObject:
         loki:
+          storage:
+            type: s3
+            bucketNames:
+              chunks: "chunks"
+              ruler: "ruler"
+              admin: "admin"
+            s3:
+              s3: http://admin:supersecret@minio.minio.svc.cluster.local:9000
+              endpoint: 'minio.minio.svc.cluster.local:9000'
+              region: us-east-1
+              access_key_id: 'admin'
+              secret_access_key: 'supersecret'
+              insecure: true
           auth_enabled: false
           schemaConfig:
             configs:
@@ -38,7 +51,7 @@ spec:
           replicas: 2
         # Enable minio for storage
         minio:
-          enabled: true
+          enabled: false
         # Zero out replica counts of other deployment modes
         singleBinary:
           replicas: 0
