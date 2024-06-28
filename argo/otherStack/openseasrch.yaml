@@ -12,7 +12,7 @@ spec:
     helm:
       valuesObject:
         persistence:
-            size: 80Gi
+            size: 200Gi
         config: 
           opensearch.yml: |
             logger.org.opensearch.index.reindex: debug
