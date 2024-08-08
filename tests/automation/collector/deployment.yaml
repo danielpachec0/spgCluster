@@ -16,7 +16,7 @@ spec:
       containers:
       - name: k6-collector
         image: dap5/k6-collector:v1
-        command: ["/collector"]
+        command: ["/reloader"]
         ports:
         - containerPort: 8080 
         volumeMounts:

@@ -1,12 +1,14 @@
 package internal
 
 import (
+	"fmt"
 	"gopkg.in/yaml.v2"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/uuid"
 	"os"
+	"strconv"
 )
 
 type TestConfig struct {
@@ -89,26 +91,29 @@ func ReadConfig() (TestConfig, error) {
 	return config, nil
 }
 
-func (config TestConfig) CreateTest(iteration int) (*unstructured.Unstructured, string, error) {
+func (config TestConfig) CreateTest(iteration int, p int) (*unstructured.Unstructured, string, error) {
 	testIdentifier := string(uuid.NewUUID())
 	env := []K6EnvVar{
 		{"TEST_IDENTIFIER", testIdentifier},
+		{"K6_VUS", strconv.Itoa(p)},
 	}
 	var err error
 	for _, v := range config.Vars {
 		env = append(env, K6EnvVar{Name: v.Name, Value: v.Value.getValue(iteration)})
 	}
 
+	fmt.Println(env)
+
 	test := K6Test{
 		ApiVersion: "k6.io/v1alpha1",
 		Kind:       "K6",
 		Metadata:   v1.ObjectMeta{Name: "test"},
 		Spec: K6TestSpec{
-			Parallelism: config.Parallelism,
+			Parallelism: p,
 			Script: K6script{
 				ConfigMap: ScriptConfig{
-					Name: "reloader-test",
-					File: "logTest.js",
+					Name: "log-test",
+					File: "logging.js",
 				},
 			},
 			Runner: K6Runner{
@@ -117,6 +122,7 @@ func (config TestConfig) CreateTest(iteration int) (*unstructured.Unstructured, 
 			},
 		},
 	}
+	//log.Fatalln("T")
 	k6TestMap, err := runtime.DefaultUnstructuredConverter.ToUnstructured(&test)
 	if err != nil {
 		return nil, testIdentifier, err

@@ -24,8 +24,9 @@ func main() {
 
 	tn := cfg.Iterations
 	te := 0
+	it := []int{100, 125, 150, 175, 200}
 	for te < tn {
-		test, testId, err := cfg.CreateTest(te)
+		test, testId, err := cfg.CreateTest(te, it[te])
 		if err != nil {
 			log.Fatal(err)
 		}

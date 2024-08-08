@@ -2,8 +2,8 @@
 
 while true; do
     echo Deleting k6
-    #kubectl delete -f /scripts/logging.yaml
-    kubectl delete -f /scripts/tracing.yaml
+    kubectl delete -f /scripts/logging.yaml
+#    kubectl delete -f /scripts/tracing.yaml
     sleep 120
     
     echo "Creating k6"
